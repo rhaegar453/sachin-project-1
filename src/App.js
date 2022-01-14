@@ -1,11 +1,37 @@
-import react from "react";
+import react, { useState } from "react";
 import Card from "./components/card";
 import Navbar from "./components/header";
 import data from "./utils/index.json";
 
 const App = () => {
-  const value = data[0];
-  console.log(value);
+  const [values, setValue]=useState(data);
+  const handleLike = (id, liked) => {
+    setValue((items)=>{
+      const updatedItems=items.map(i=>{
+        if(i.id===id){
+          return {...i, liked:!liked, likes:liked===true?i.likes-1:i.likes+1}
+        }
+        else{
+          return i;
+        }
+      })
+      return updatedItems
+    })
+  };
+  const handleBookmark = (id, bookmarked) => {
+    console.log('handling the bookmark',id)
+    setValue((items)=>{
+      const updatedItems=items.map(i=>{
+        if(i.id===id){
+          return {...i, bookmarked:!bookmarked}
+        }
+        else{
+          return i;
+        }
+      })
+      return updatedItems
+    })
+  };
   return (
     <div>
       <Navbar
@@ -15,13 +41,22 @@ const App = () => {
         }
         handleLikedClick={(e) => console.log("Clicked on the liked button")}
       />
-      <Card
-        title={value.title}
-        bookmarked={value.bookmarked}
-        likes={value.likes}
-        tags={value.tags}
-      />
-      <h1>Hello World</h1>
+      {values.map((item) => {
+        return (
+          <Card
+            key={item.id}
+            id={item.id}
+            onBookmarkButton={handleBookmark}
+            onLikeButton={handleLike}
+            title={item.title}
+            bookmarked={item.bookmarked}
+            likes={item.likes}
+            liked={item.liked}
+            tags={item.tags}
+            image={item.imageUrl}
+          />
+        );
+      })}
     </div>
   );
 };
