@@ -1,0 +1,23 @@
+.headerTitle {
+  display: inline-block;
+  margin: 0px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f2f2f2;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+}
+.buttonContainer > button {
+  margin-left: 30px;
+}
+
+.marginRight30 {
+  margin-right: 30px;
+}
